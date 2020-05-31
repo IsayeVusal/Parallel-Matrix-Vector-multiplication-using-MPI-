@@ -1,0 +1,44 @@
+# Initialize the matrix A and vector b with random numbers (can be either integers or oating points). The vector c will store result of A  b.
+
+from mpi4py import MPI
+import numpy as np
+
+comm = MPI.COMM_WORLD
+size = comm.Get_size()
+rank = comm.Get_rank()
+startT=MPI.Wtime()
+
+x = np.random.rand(100, 100)
+y = np.random.rand(100)
+z =()
+
+def matmul(x,y):
+    z = np.dot(x,y)
+print(z)
+    
+
+z=np.array([rank]*(10)**2, dtype=float)
+if comm.rank == 0:
+    comm.send(z, dest = (rank +1)%size)
+if comm.rank > 0:
+    data = comm.recv(source =(rank-1)%size)
+    comm.send(z, dest=(rank+1)%size)
+if comm.rank == 0:
+    data = comm.recv(source=size-1)
+    
+print("my rank is " + str(rank))
+print("i got this result")
+print(z)    
+
+add=np. array([rank]*(10)**2, dtype=float)
+if comm.rank == 0:
+    comm.send(add, dest = (rank +1)%size)
+if comm.rank > 0:
+    data = comm.recv(source =(rank-1)%size)
+    comm.send(add, dest=(rank+1)%size)
+if comm.rank == 0:
+    data = comm.recv(source=size-1)
+    
+print("my rank is " + str(rank))
+print("i got this result")
+print(data)  
